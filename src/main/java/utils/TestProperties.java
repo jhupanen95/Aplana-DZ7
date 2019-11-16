@@ -12,7 +12,7 @@ public class TestProperties {
 
     private TestProperties(){
         try {
-            properties.load(new FileReader(new File("C:\\Users\\jhupanen\\IdeaProjects\\Aplana\\Aplana-DZ4\\src\\environment.properties"))); //properties.load(new FileReader(new File("./" + System.getProperty("environment") + ".properties")));
+            properties.load(new FileReader(new File(System.getProperty("user.dir") + "\\src\\environment.properties"))); //properties.load(new FileReader(new File("./" + System.getProperty("environment") + ".properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }
