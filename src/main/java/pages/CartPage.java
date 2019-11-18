@@ -24,17 +24,20 @@ public class CartPage {
     }
 
     public double getPriceProduct(String id) {
-        WebElement product = cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id + "']"));
-        String price = product.findElement(By.xpath("//td[@class='subtotal at__subtotalprice']")).getAttribute("data-totalpricevalue").replaceAll(",", "");
+        String price = cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id + "']/td[@class='subtotal at__subtotalprice']")).getAttribute("data-totalpricevalue").replaceAll(",", "");
         return Double.parseDouble(price);
     }
 
     public void addCountProduct(String id, int count){
-        WebElement product = cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id + "']"));
-        WebElement selectElem = product.findElement(By.xpath("//select"));
+        WebElement selectElem = cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id +"']/td[@class='quantity']/select"));
         Select select = new Select(selectElem);
-        String price = product.findElement(By.xpath("//td[@class='subtotal at__subtotalprice']")).getAttribute("data-totalpricevalue");
+        String price = cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id +"']/td[@class='subtotal at__subtotalprice']")).getAttribute("data-totalpricevalue");
         select.selectByIndex(count-1);
-        wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(product.findElement(By.xpath("//td[@class='subtotal at__subtotalprice']")), "data-totalpricevalue", price)));
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(cart.findElement(By.xpath("//tr[@class='at__cartproducts' and @data-productid='"+ id +"']/td[@class='subtotal at__subtotalprice']")), "data-totalpricevalue", price)));
     }
 }
